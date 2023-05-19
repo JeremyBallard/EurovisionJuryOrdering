@@ -13,6 +13,12 @@ def countryLoop(endLoop, tableXPath, driver, countryDict):
 		#necessary to match up keys properly
 		country = country.replace(" ", "-")
 		juryRank = driver.find_element(By.XPATH, juryXPath).text
+		#if juryRank has point or points in the text, remove it and just display rank
+		#+7 or +6 because string + space after
+		if (juryRank.find('points') != -1):
+			juryRank = juryRank[juryRank.find('points')+7:]
+		elif(juryRank.find('point') != -1):
+			juryRank = juryRank[juryRank.find('point')+6:]
 		#https://www.guru99.com/python-dictionary-append.html
 		#takes name of country, uses it as a key for the correct dictionary
 		#then adds respective country's jury rank
