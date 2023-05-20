@@ -41,6 +41,8 @@ qualCountryList = ['albania', 'armenia', 'australia', 'austria', 'belgium', 'cro
 'moldova','norway','poland','portugal','serbia','slovenia','spain','sweden','switzerland',
 'ukraine','united-kingdom']
 #generates unique dictionary with no data for each country
+#example: In order to access armenia's jury list, you need countryDict['armenia']
+#a specific element in armenia's jury list would be countryDict['armenia'][4]
 countryDict = {key:[] for key in qualCountryList}
 driver = webdriver.Firefox()
 #make sure that webpage can fully load
@@ -52,9 +54,9 @@ for i in range(0,37):
 	driver.get('https://eurovision.tv/event/liverpool-2023/grand-final/results/' + fullCountryList[i])
 	#absolute XPATH because I have no idea how to do relative yet
 	tableXPath = '/html/body/div[1]/div/div/div[3]/div/div/main/section/div/div[2]/div/div/div[2]/div/div/div[2]/div/table/tbody'
-	#A country can't vote for itself, add None to space
+	#A country can't vote for itself, add 0 to space to say no rank
 	if fullCountryList[i] in qualCountryList:
-		countryDict[fullCountryList[i]].append(None)
+		countryDict[fullCountryList[i]].append(0)
 		ending = 26
 	countryLoop(ending, tableXPath, driver, countryDict)
 #end selenium before processing dataframe into csv
