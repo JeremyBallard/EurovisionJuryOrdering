@@ -19,6 +19,8 @@ def countryLoop(endLoop, tableXPath, driver, countryDict):
 			juryRank = juryRank[juryRank.find('points')+7:]
 		elif(juryRank.find('point') != -1):
 			juryRank = juryRank[juryRank.find('point')+6:]
+		#remove rd, st, or th, to convert into integer
+		juryRank = int(juryRank[:-2])
 		#https://www.guru99.com/python-dictionary-append.html
 		#takes name of country, uses it as a key for the correct dictionary
 		#then adds respective country's jury rank
@@ -61,5 +63,6 @@ driver.quit()
 #orient set to index so that columns can be defined as all countries
 pdFullCountryData = pd.DataFrame.from_dict(countryDict, orient='index', 
 						columns=fullCountryList)
+#print(pdFullCountryData)
 #output to juryRank.csv, N/A for None just for niceness, can manipulate data from here
 pdFullCountryData.to_csv('juryRank.csv', na_rep='N/A')
