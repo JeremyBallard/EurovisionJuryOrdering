@@ -29,6 +29,7 @@ def countryLoop(endLoop, tableXPath, driver, countryDict):
 	time.sleep(.5)
 
 #every country that votes
+#eventually will rework this so selenium can autofill these two arrays
 fullCountryList = ['albania', 'armenia', 'australia', 'austria', 'azerbaijan', 'belgium', 
 'croatia', 'cyprus', 'czechia', 'denmark', 'estonia', 'finland', 'france', 'georgia', 
 'germany', 'greece', 'iceland', 'ireland', 'israel', 'italy', 'latvia', 'lithuania',
