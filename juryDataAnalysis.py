@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import os
 
 qualCountryList = ['albania', 'armenia', 'australia', 'austria', 'belgium', 'croatia',
 'cyprus','czechia','estonia','finland','france','germany','israel','italy','lithuania',
@@ -38,15 +39,31 @@ for row in pdJuryData.itertuples(name='Country'):
 	for i in range(len(tempArr)):
 		dataArr[qualCountry].append(tempArr[i])
 	tempArr.clear()
-#access array from dataArr['country']
+
 binEdge = [1,5,10,15,20,26]
-#fix later
+#checks if Histograms folder exists before making one to store histogram files
+#https://www.tutorialspoint.com/How-can-I-create-a-directory-if-it-does-not-exist-using-Python
+if not os.path.exists('Histograms'):
+	os.makedirs('Histograms')
+#checks every country in qualified list
+#takes data from dataArr, makes np.array
+#sends to histogram generator in matplotlib
+#extra visual stuff to make it look pretty
 for country in qualCountryList:
+	#access array from dataArr['country']
 	rank = np.array(dataArr[country])
 	#https://medium.com/@arseniytyurin/how-to-make-your-histogram-shine-69e432be39ca
 	plt.hist(rank, binEdge, edgecolor='#101010',linewidth=.5)
 	plt.xlim(1, 26)
 	plt.yticks(np.arange(0, 22, step=2))
-	plt.xlabel('Rank given')
+	#germany breaks the chart cause of all the lasts
+	if country == 'germany':
+		plt.yticks(np.arange(0,26,step=2))
+	#sweden breaks the chart because it's sweden
+	if country == 'sweden':
+		plt.yticks(np.arange(0,30,step=2))
+	plt.xlabel('Rank given by other countries')
+	plt.ylabel('Count')
 	plt.title(country + ' jury rank')
-	plt.show()
+	plt.savefig('Histograms/' + country + 'JuryRanksGiven.png')
+	plt.clf()
