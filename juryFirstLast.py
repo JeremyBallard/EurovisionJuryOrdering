@@ -37,8 +37,8 @@ for country in firstDict.keys():
 	firstLastCount[lastDict[country]][1] += 1
 #output DataFrame and then to csv for data save
 pdJuryFirstLast = pd.DataFrame.from_dict(juryFirstLastPlaces, orient='index',
-											columns=['Jury First','Jury Last'])
+						columns=['Jury First','Jury Last'])
 pdJuryCount = pd.DataFrame.from_dict(firstLastCount, orient='index',
-										columns=['# of First', '# of Last'])
+						columns=['# of First', '# of Last'])
 pdJuryFirstLast.to_csv("juryFirstLast.csv")
 pdJuryCount.to_csv('juryCount.csv')

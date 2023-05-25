@@ -65,7 +65,7 @@ driver.close()
 driver.quit()
 #orient set to index so that columns can be defined as all countries
 pdFullCountryData = pd.DataFrame.from_dict(countryDict, orient='index', 
-						columns=fullCountryList)
+			columns=fullCountryList)
 #print(pdFullCountryData)
 #output to juryRank.csv, N/A for None just for niceness, can manipulate data from here
 pdFullCountryData.to_csv('juryRank.csv', na_rep='N/A')
