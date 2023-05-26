@@ -53,7 +53,14 @@ for country in qualCountryList:
 	#access array from dataArr['country']
 	rank = np.array(dataArr[country])
 	#https://medium.com/@arseniytyurin/how-to-make-your-histogram-shine-69e432be39ca
-	plt.hist(rank, binEdge, edgecolor='#101010',linewidth=.5)
+	#we add patches for custom colors on each bin
+	rank, bins, patches = plt.hist(rank, binEdge, edgecolor='#101010',linewidth=.5)
+	#color grading for each bin
+	patches[0].set_facecolor('#49b249')
+	patches[1].set_facecolor('#9cdc38')
+	patches[2].set_facecolor('#e7e728')
+	patches[3].set_facecolor('#d7a838')
+	patches[4].set_facecolor('#b94949')
 	plt.xlim(1, 26)
 	plt.yticks(np.arange(0, 22, step=2))
 	#germany breaks the chart cause of all the lasts
