@@ -22,7 +22,7 @@ The other is titled "juryCount.csv", which shows the number of times each countr
 If you have changed the .csv file name in "juryFullRank.py", you must change line 7 to be the same name in order to have the import work.
 
 ## More granular data analysis
-"juryDataAnalysis.py" is currently in the development process. The goal is to have histograms for every country, with bucket edges being ranks 1-5, 6-10, 11-15, 16-20, and 21-26. 
+"juryDataAnalysis.py" is currently in the development process. The goal is to have histograms for every country, with bucket edges being ranks 1-5, 6-10, 11-15, 16-20, and 21-26. EDIT 5/25/2023: This has been achieved! Color grading for each bucket as well. My only issue is that the buckets are slightly janky, as in the 5 rank is actually in 5-9 bucket, 10 is actually in 10-14, so on. I take this compromise for now because the bars look nice. The program outputs into a separate folder called "Histograms", which automatically gets created upon running. Next is to have country stacks, like a Finland v Sweden matchup for jury ranks or have the jury ranks for all the experimental entries.
 
 Average ranks for each country and total sum of ranks (where lower is better) can already be handled by Excel or any other spreadsheet program and simply clicking the row of each country.
 These are not priority features since it is easy to manipulate the data in that way. Histograms *do* exist in Excel, but the specifics of having those buckets do *not* easily exist, so I need to make them myself.
