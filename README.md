@@ -27,12 +27,14 @@ These are not priority features since it is easy to manipulate the data in that 
 
 "juryDataAnalysis.py" is currently in the development process.The idea is to take all the country data and make many histograms out of it.
 Currently, I'm planning on 4 different ideas of analysis: 
-- [x] Individual Histograms for each country, put into bins of (mostly) equal width. There is a function called "individualHistograms" which takes each country and outputs a histogram with bins 1-5, 6-10, 11-15, 16-20, and 21-26. 
+- [x] Individual Histograms for each country, put into bins of (mostly) equal width.  
+There is a function called "individualHistograms" which takes each country and outputs a histogram with bins 1-5, 6-10, 11-15, 16-20, and 21-26. 
 There is color grading within these bins to give it a nice visual distinction, with green on the left and working towards red.  The function outputs all figures into a folder titled "Individual_Histograms". 
-- [x] Top 3 Rank Histogram function for any country passed in, with 1st, 2nd, and 3rd count shown as bars. There is a function called "top3Hist". It takes in a country as a string, generates the histogram with 3 buckets, 1st, 2nd, and 3rd.
+- [x] Top 3 Rank Histogram function for any country passed in, with 1st, 2nd, and 3rd count shown as bars.  
+There is a function called "top3Hist". It takes in a country as a string, generates the histogram with 3 buckets, 1st, 2nd, and 3rd.
 There is no x axis label for these histograms as each bar is labelled with text on the top. I used nearly the same colors for the first and second bucket of the individual histograms, and added a middle color for gradient.
 These figures get saved in "HistogramTop3".
-- [x] Head to Head Histogram "matchups". Ability to compare two countries and stack the bars in front of each other so you can see which one got more of which bucket.
+- [x] Head to Head Histogram "matchups": Ability to compare two countries and stack the bars beside each other so you can see which one got more of which bucket.  
 The function "matchupHist" takes two countries, the colors for each country respectively, and merges their rank data into a single histogram. This way, you can directly compare the counts between each country in each bucket.
 There is a legend in the top that shows which country is which color on the map. You do not have to define colors and colors will be automatically used from matplotlib. Only takes in 2 countries currently.
 - [ ] Grouping many countries by common category and showing total count of each bucket, with bars distinctly stacked on top of each other.
