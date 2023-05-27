@@ -74,11 +74,12 @@ def top3Hist(country, dataArr):
 	plt.clf()
 
 def matchupHist(countryHead, dataArr, colors=None):
-	if len(countryHead) != 2:
-		print('Need exactly two countries to make head to head work')
+	if len(countryHead) != 2 and type(countryHead) is not list:
+		print('Need exactly two countries in a list to make head to head work')
 		return
 	dirExist('1v1Histogram')
-
+	#binEdge line to plt.ylabel line can be its own function
+	#need to pass figure in and out of it though
 	binEdge = [1,5.01,10.01,15.01,20.01,26] 
 	
 	rank = []
@@ -97,6 +98,28 @@ def matchupHist(countryHead, dataArr, colors=None):
 	plt.title(countryHead[0] + ' vs. ' + countryHead[1] + ": Ranks by Jury")
 	plt.legend(prop={'size': '14'})
 	plt.savefig('1v1Histogram/' + countryHead[0]+countryHead[1]+'Matchup.png')
+	plt.clf()
+
+def traitHist(countryHead, dataArr, title, colors=None):
+	dirExist('TraitHistogram')
+	binEdge = [1,5.01,10.01,15.01,20.01,26] 
+	
+	rank = []
+	#makes an array of arrays, which allows hist to generate side by side bars
+	for country in countryHead:
+		rank.append(np.array(dataArr[country]))
+	##https://matplotlib.org/stable/gallery/statistics/histogram_multihist.html
+	#color and label can have arrays passed into them
+	#label[0]=colors[0]
+	#rwidth is a multiplier to the bars so they fill out the xticks
+	plt.hist(rank, binEdge, color=colors, label=countryHead, rwidth=1, histtype='barstacked')
+	plt.xlim(1,26)
+	plt.xticks([1,5,10,15,20,26])
+	plt.xlabel('Rank given by other countries')
+	plt.ylabel('Count')
+	plt.title(title)
+	plt.legend()
+	plt.savefig('TraitHistogram/' + title + '.png')
 	plt.clf()
 
 qualCountryList = ['albania', 'armenia', 'australia', 'austria', 'belgium', 'croatia',
@@ -150,6 +173,9 @@ for row in pdJuryData.itertuples(name='Country'):
 #top3Hist('finland', dataArr)
 
 #1v1 Matchups based on jury Rank
-#matchupHist(['sweden','finland'], dataArr, ['royalblue','lawngreen'])
+#matchupHist(['sweden','finland'], dataArr, ['gold','#72c243'])
 #matchupHist(['italy', 'israel'], dataArr, ['limegreen', 'cornflowerblue'])
 #matchupHist(['czechia', 'portugal'], dataArr)
+
+traitHist(['sweden', 'estonia', 'italy'], dataArr, 'jury darlings', ['gold', 'skyblue', 'limegreen'])
+traitHist(['spain', 'france', 'switzerland'], dataArr, 'jury flops', ['firebrick', 'royalblue', 'red'])
