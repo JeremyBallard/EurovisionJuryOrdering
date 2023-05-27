@@ -12,36 +12,12 @@ def dirExist(pathDir):
 
 def watermarkPlace(fig):
 	pass
-#country is a string of the country you want
-#generates top 3 of any country passed in
-#generates 1st 2nd 3rd regardless of a country getting any of that rank
-def top3Hist(country, dataArr):
-	dirExist('HistogramTop3')
-	binEdge = [0.5, 1.5, 2.5, 3.5]
-	rank = np.array(dataArr[country])
-	rank, bins, patches = plt.hist(rank, binEdge, edgecolor='#101010',linewidth=.5)
-	plt.xlim(0.5,3.5)
-	#https://stackoverflow.com/questions/12998430/how-to-remove-xticks-from-a-plot
-	plt.tick_params(axis='x', which='both', bottom=False, labelbottom=False)
-	plt.yticks(np.arange(0,20,step=2))
-	plt.title(country + ' jury rank top 3')
-	patches[0].set_facecolor('#44ac44')
-	patches[1].set_facecolor('#72c243')
-	patches[2].set_facecolor('#9cdc38')
-	#https://stackoverflow.com/questions/32785705/how-to-label-patch-in-matplotlib
-	#get_height + 1 makes it look prettier
-	plt.text(patches[0].get_width(), patches[0].get_height()+1, '1st')
-	#add first width to second width for correct alignment
-	plt.text(patches[0].get_width() + patches[1].get_width(), patches[1].get_height()+1, '2nd')
-	plt.text(patches[0].get_width() + patches[1].get_width() + patches[2].get_width(), patches[2].get_height()+1, '3rd')
-	plt.savefig('HistogramTop3/' + country +'Top3.png')
-	plt.clf()
 
 #checks every country in qualified list
 #takes data from dataArr, makes np.array
 #sends to histogram generator in matplotlib
 #extra visual stuff to make it look pretty
-def individualHistograms(qualCountryList, dataArr):
+def indivHist(qualCountryList, dataArr):
 	#have to include a very tiny amount above the int we want so that the bin is [1,5.01)
 	#which includes the 5 rank, very important for accurate analysis while still looking good
 	binEdge = [1,5.01,10.01,15.01,20.01,26]
@@ -72,7 +48,35 @@ def individualHistograms(qualCountryList, dataArr):
 		plt.savefig('Individual_Histograms/' + country + 'JuryRanksGiven.png')
 		plt.clf()
 
-def matchupHist(countryHead, colors, dataArr):
+#country is a string of the country you want
+#generates top 3 of any country passed in
+#generates 1st 2nd 3rd regardless of a country getting any of that rank
+def top3Hist(country, dataArr):
+	dirExist('HistogramTop3')
+	binEdge = [0.5, 1.5, 2.5, 3.5]
+	rank = np.array(dataArr[country])
+	rank, bins, patches = plt.hist(rank, binEdge, edgecolor='#101010',linewidth=.5)
+	plt.xlim(0.5,3.5)
+	#https://stackoverflow.com/questions/12998430/how-to-remove-xticks-from-a-plot
+	plt.tick_params(axis='x', which='both', bottom=False, labelbottom=False)
+	plt.yticks(np.arange(0,20,step=2))
+	plt.title(country + ' jury rank top 3')
+	patches[0].set_facecolor('#44ac44')
+	patches[1].set_facecolor('#72c243')
+	patches[2].set_facecolor('#9cdc38')
+	#https://stackoverflow.com/questions/32785705/how-to-label-patch-in-matplotlib
+	#get_height + 1 makes it look prettier
+	plt.text(patches[0].get_width(), patches[0].get_height()+1, '1st')
+	#add first width to second width for correct alignment
+	plt.text(patches[0].get_width() + patches[1].get_width(), patches[1].get_height()+1, '2nd')
+	plt.text(patches[0].get_width() + patches[1].get_width() + patches[2].get_width(), patches[2].get_height()+1, '3rd')
+	plt.savefig('HistogramTop3/' + country +'Top3.png')
+	plt.clf()
+
+def matchupHist(countryHead, dataArr, colors=None):
+	if len(countryHead) != 2:
+		print('Need exactly two countries to make head to head work')
+		return
 	dirExist('1v1Histogram')
 
 	binEdge = [1,5.01,10.01,15.01,20.01,26] 
@@ -85,7 +89,7 @@ def matchupHist(countryHead, colors, dataArr):
 	#color and label can have arrays passed into them
 	#label[0]=colors[0]
 	#rwidth is a multiplier to the bars so they fill out the xticks
-	plt.hist(rank, binEdge, color=colors, label=countryHead, rwidth=1.25)
+	plt.hist(rank, binEdge, color=colors, label=countryHead, rwidth=1)
 	plt.xlim(1,26)
 	plt.xticks([1,5,10,15,20,26])
 	plt.xlabel('Rank given by other countries')
@@ -137,7 +141,7 @@ for row in pdJuryData.itertuples(name='Country'):
 #Uncomment the function to run that function
 
 #Makes figures for each country, grouped in bins: 1-5, 6-10, 11-15, 16-20, 21-26
-#individualHistograms(qualCountryList, dataArr)
+#indivHist(qualCountryList, dataArr)
 
 #Top 3 jury ranks for the top 4 by jury countries
 #top3Hist('sweden', dataArr)
@@ -146,5 +150,6 @@ for row in pdJuryData.itertuples(name='Country'):
 #top3Hist('finland', dataArr)
 
 #1v1 Matchups based on jury Rank
-#matchupHist(['sweden', 'finland'], ['royalblue','lawngreen'], dataArr)
-#matchupHist(['italy', 'israel'], ['limegreen', 'cornflowerblue'], dataArr)
+#matchupHist(['sweden','finland'], dataArr, ['royalblue','lawngreen'])
+#matchupHist(['italy', 'israel'], dataArr, ['limegreen', 'cornflowerblue'])
+#matchupHist(['czechia', 'portugal'], dataArr)
