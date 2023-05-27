@@ -3,6 +3,70 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 
+def watermarkPlace(fig):
+	pass
+#country is a string of the country you want
+#generates top 3 of any country passed in
+#generates 1st 2nd 3rd regardless of a country getting any of that rank
+def top3Hist(country, dataArr):
+	if not os.path.exists('HistogramTop3'):
+		os.makedirs('HistogramTop3')
+	binEdge = [0.5, 1.5, 2.5, 3.5]
+	rank = np.array(dataArr[country])
+	rank, bins, patches = plt.hist(rank, binEdge, edgecolor='#101010',linewidth=.5)
+	plt.xlim(0.5,3.5)
+	#https://stackoverflow.com/questions/12998430/how-to-remove-xticks-from-a-plot
+	plt.tick_params(axis='x', which='both', bottom=False, labelbottom=False)
+	plt.yticks(np.arange(0,20,step=2))
+	plt.title(country + ' jury rank top 3')
+	patches[0].set_facecolor('#44ac44')
+	patches[1].set_facecolor('#72c243')
+	patches[2].set_facecolor('#9cdc38')
+	#https://stackoverflow.com/questions/32785705/how-to-label-patch-in-matplotlib
+	#get_height + 1 makes it look prettier
+	plt.text(patches[0].get_width(), patches[0].get_height()+1, '1st')
+	#add first width to second width for correct alignment
+	plt.text(patches[0].get_width() + patches[1].get_width(), patches[1].get_height()+1, '2nd')
+	plt.text(patches[0].get_width() + patches[1].get_width() + patches[2].get_width(), patches[2].get_height()+1, '3rd')
+	plt.savefig('HistogramTop3/' + country +'Top3.png')
+	plt.clf()
+
+#checks every country in qualified list
+#takes data from dataArr, makes np.array
+#sends to histogram generator in matplotlib
+#extra visual stuff to make it look pretty
+def individualHistograms(qualCountryList, dataArr):
+	#have to include a very tiny amount above the int we want so that the bin is [1,5.01)
+	#which includes the 5 rank, very important for accurate analysis while still looking good
+	binEdge = [1,5.01,10.01,15.01,20.01,26]
+	#checks if Histograms folder exists before making one to store histogram files
+	#https://www.tutorialspoint.com/How-can-I-create-a-directory-if-it-does-not-exist-using-Python
+	if not os.path.exists('Individual_Histograms'):
+		os.makedirs('Individual_Histograms')
+
+	for country in qualCountryList:
+		#access array from dataArr['country']
+		rank = np.array(dataArr[country])
+		#https://medium.com/@arseniytyurin/how-to-make-your-histogram-shine-69e432be39ca
+		#we add patches for custom colors on each bin
+		rank, bins, patches = plt.hist(rank, binEdge, edgecolor='#101010',linewidth=.5)
+		#color grading for each bin
+		patches[0].set_facecolor('#49b249')
+		patches[1].set_facecolor('#9cdc38')
+		patches[2].set_facecolor('#e7e728')
+		patches[3].set_facecolor('#d7a838')
+		patches[4].set_facecolor('#b94949')
+		plt.xlim(1, 26)
+		plt.yticks(np.arange(0, 22, step=2))
+		#sweden breaks the chart because it's sweden
+		if country == 'sweden':
+			plt.yticks(np.arange(0,33,step=2))
+		plt.xlabel('Rank given by other countries')
+		plt.ylabel('Count')
+		plt.title(country + ' jury rank')
+		plt.savefig('Individual_Histograms/' + country + 'JuryRanksGiven.png')
+		plt.clf()
+
 qualCountryList = ['albania', 'armenia', 'australia', 'austria', 'belgium', 'croatia',
 'cyprus','czechia','estonia','finland','france','germany','israel','italy','lithuania',
 'moldova','norway','poland','portugal','serbia','slovenia','spain','sweden','switzerland',
@@ -39,36 +103,17 @@ for row in pdJuryData.itertuples(name='Country'):
 	for i in range(len(tempArr)):
 		dataArr[qualCountry].append(tempArr[i])
 	tempArr.clear()
-#have to include a very tiny amount above the int we want so that the bin is [1,5.01)
-#which includes the 5 rank, very important for accurate analysis while still looking good
-binEdge = [1,5.01,10.01,15.01,20.01,26]
-#checks if Histograms folder exists before making one to store histogram files
-#https://www.tutorialspoint.com/How-can-I-create-a-directory-if-it-does-not-exist-using-Python
-if not os.path.exists('Histograms'):
-	os.makedirs('Histograms')
-#checks every country in qualified list
-#takes data from dataArr, makes np.array
-#sends to histogram generator in matplotlib
-#extra visual stuff to make it look pretty
-for country in qualCountryList:
-	#access array from dataArr['country']
-	rank = np.array(dataArr[country])
-	#https://medium.com/@arseniytyurin/how-to-make-your-histogram-shine-69e432be39ca
-	#we add patches for custom colors on each bin
-	rank, bins, patches = plt.hist(rank, binEdge, edgecolor='#101010',linewidth=.5)
-	#color grading for each bin
-	patches[0].set_facecolor('#49b249')
-	patches[1].set_facecolor('#9cdc38')
-	patches[2].set_facecolor('#e7e728')
-	patches[3].set_facecolor('#d7a838')
-	patches[4].set_facecolor('#b94949')
-	plt.xlim(1, 26)
-	plt.yticks(np.arange(0, 22, step=2))
-	#sweden breaks the chart because it's sweden
-	if country == 'sweden':
-		plt.yticks(np.arange(0,33,step=2))
-	plt.xlabel('Rank given by other countries')
-	plt.ylabel('Count')
-	plt.title(country + ' jury rank')
-	plt.savefig('Histograms/' + country + 'JuryRanksGiven.png')
-	plt.clf()
+
+#Histogram processing for specific things
+#Each function will come with a comment describing the function, and then the function
+#Uncomment the function to run that function
+
+#Makes figures for each country, grouped in bins: 1-5, 6-10, 11-15, 16-20, 21-26
+#individualHistograms(qualCountryList, dataArr)
+
+#Top 3 jury ranks for the top 4 by jury countries
+#top3Hist('sweden', dataArr)
+#top3Hist('italy', dataArr)
+#top3Hist('israel', dataArr)
+#top3Hist('finland', dataArr)
+
