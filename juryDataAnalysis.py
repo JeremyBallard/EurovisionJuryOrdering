@@ -3,14 +3,20 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 
+#create directory on exist, otherwise do nothing
+#checks if Histograms folder exists before making one to store histogram files
+#https://www.tutorialspoint.com/How-can-I-create-a-directory-if-it-does-not-exist-using-Python
+def dirExist(pathDir):
+	if not os.path.exists(pathDir):
+		os.makedirs(pathDir)
+
 def watermarkPlace(fig):
 	pass
 #country is a string of the country you want
 #generates top 3 of any country passed in
 #generates 1st 2nd 3rd regardless of a country getting any of that rank
 def top3Hist(country, dataArr):
-	if not os.path.exists('HistogramTop3'):
-		os.makedirs('HistogramTop3')
+	dirExist('HistogramTop3')
 	binEdge = [0.5, 1.5, 2.5, 3.5]
 	rank = np.array(dataArr[country])
 	rank, bins, patches = plt.hist(rank, binEdge, edgecolor='#101010',linewidth=.5)
@@ -39,10 +45,8 @@ def individualHistograms(qualCountryList, dataArr):
 	#have to include a very tiny amount above the int we want so that the bin is [1,5.01)
 	#which includes the 5 rank, very important for accurate analysis while still looking good
 	binEdge = [1,5.01,10.01,15.01,20.01,26]
-	#checks if Histograms folder exists before making one to store histogram files
-	#https://www.tutorialspoint.com/How-can-I-create-a-directory-if-it-does-not-exist-using-Python
-	if not os.path.exists('Individual_Histograms'):
-		os.makedirs('Individual_Histograms')
+	
+	dirExist('Individual_Histograms')
 
 	for country in qualCountryList:
 		#access array from dataArr['country']
@@ -57,6 +61,7 @@ def individualHistograms(qualCountryList, dataArr):
 		patches[3].set_facecolor('#d7a838')
 		patches[4].set_facecolor('#b94949')
 		plt.xlim(1, 26)
+		plt.xticks([1,5,10,15,20,26])
 		plt.yticks(np.arange(0, 22, step=2))
 		#sweden breaks the chart because it's sweden
 		if country == 'sweden':
@@ -66,6 +71,29 @@ def individualHistograms(qualCountryList, dataArr):
 		plt.title(country + ' jury rank')
 		plt.savefig('Individual_Histograms/' + country + 'JuryRanksGiven.png')
 		plt.clf()
+
+def matchupHist(countryHead, colors, dataArr):
+	dirExist('1v1Histogram')
+
+	binEdge = [1,5.01,10.01,15.01,20.01,26] 
+	
+	rank = []
+	#makes an array of arrays, which allows hist to generate side by side bars
+	for country in countryHead:
+		rank.append(np.array(dataArr[country]))
+	##https://matplotlib.org/stable/gallery/statistics/histogram_multihist.html
+	#color and label can have arrays passed into them
+	#label[0]=colors[0]
+	#rwidth is a multiplier to the bars so they fill out the xticks
+	plt.hist(rank, binEdge, color=colors, label=countryHead, rwidth=1.25)
+	plt.xlim(1,26)
+	plt.xticks([1,5,10,15,20,26])
+	plt.xlabel('Rank given by other countries')
+	plt.ylabel('Count')
+	plt.title(countryHead[0] + ' vs. ' + countryHead[1] + ": Ranks by Jury")
+	plt.legend(prop={'size': '14'})
+	plt.savefig('1v1Histogram/' + countryHead[0]+countryHead[1]+'Matchup.png')
+	plt.clf()
 
 qualCountryList = ['albania', 'armenia', 'australia', 'austria', 'belgium', 'croatia',
 'cyprus','czechia','estonia','finland','france','germany','israel','italy','lithuania',
@@ -117,3 +145,6 @@ for row in pdJuryData.itertuples(name='Country'):
 #top3Hist('israel', dataArr)
 #top3Hist('finland', dataArr)
 
+#1v1 Matchups based on jury Rank
+#matchupHist(['sweden', 'finland'], ['royalblue','lawngreen'], dataArr)
+#matchupHist(['italy', 'israel'], ['limegreen', 'cornflowerblue'], dataArr)
