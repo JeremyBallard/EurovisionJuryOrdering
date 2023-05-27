@@ -39,8 +39,9 @@ for row in pdJuryData.itertuples(name='Country'):
 	for i in range(len(tempArr)):
 		dataArr[qualCountry].append(tempArr[i])
 	tempArr.clear()
-
-binEdge = [1,5,10,15,20,26]
+#have to include a very tiny amount above the int we want so that the bin is [1,5.01)
+#which includes the 5 rank, very important for accurate analysis while still looking good
+binEdge = [1,5.01,10.01,15.01,20.01,26]
 #checks if Histograms folder exists before making one to store histogram files
 #https://www.tutorialspoint.com/How-can-I-create-a-directory-if-it-does-not-exist-using-Python
 if not os.path.exists('Histograms'):
@@ -63,12 +64,9 @@ for country in qualCountryList:
 	patches[4].set_facecolor('#b94949')
 	plt.xlim(1, 26)
 	plt.yticks(np.arange(0, 22, step=2))
-	#germany breaks the chart cause of all the lasts
-	if country == 'germany':
-		plt.yticks(np.arange(0,26,step=2))
 	#sweden breaks the chart because it's sweden
 	if country == 'sweden':
-		plt.yticks(np.arange(0,30,step=2))
+		plt.yticks(np.arange(0,33,step=2))
 	plt.xlabel('Rank given by other countries')
 	plt.ylabel('Count')
 	plt.title(country + ' jury rank')
