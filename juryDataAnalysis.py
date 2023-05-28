@@ -171,9 +171,12 @@ for row in pdJuryData.itertuples(name='Country'):
 #top3Hist('finland', dataArr)
 
 #1v1 Matchups based on jury Rank
-#matchupHist(['sweden','finland'], dataArr, ['gold','#72c243'])
-#matchupHist(['italy', 'israel'], dataArr, ['limegreen', 'cornflowerblue'])
-#matchupHist(['czechia', 'portugal'], dataArr)
+#matchupHist(['sweden','finland'], dataArr, ['gold', '#32cd32'])
+#matchupHist(['italy', 'israel'], dataArr, ['#43b043', 'royalblue'])
 
-traitHist(['sweden', 'estonia', 'italy'], dataArr, 'jury darlings', ['gold', 'skyblue', 'limegreen'])
-traitHist(['spain', 'france', 'switzerland'], dataArr, 'jury flops', ['firebrick', 'royalblue', 'red'])
+#Trait matchups for various groupings like jury darlings, jury darlings but flops, out of the box, etc
+#traitHist(['sweden', 'estonia', 'italy'], dataArr, 'jury darlings', ['gold', 'skyblue', '#43b043'])
+#traitHist(['france', 'spain', 'switzerland'], dataArr, 'jury darlings but flops', ['midnightblue', 'goldenrod',  'red'])
+#traitHist(['croatia', 'serbia', 'finland', 'ukraine', 'germany'], dataArr, 'unique songs', 
+	#['blue', '#C7363D', '#32cd32', '#0057B7', 'firebrick'])
+traitHist(['croatia', 'slovenia', 'germany', 'australia'], dataArr, 'rockMetalBands', ['blue', '#fc8eac','maroon', '#E4002B'])
