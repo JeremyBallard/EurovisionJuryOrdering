@@ -11,6 +11,7 @@ def dirExist(pathDir):
 		os.makedirs(pathDir)
 
 def watermarkPlace(fig):
+	#https://matplotlib.org/stable/gallery/text_labels_and_annotations/watermark_text.html
 	pass
 
 #checks every country in qualified list
@@ -86,7 +87,8 @@ def matchupHist(countryHead, dataArr, colors=None):
 	#makes an array of arrays, which allows hist to generate side by side bars
 	for country in countryHead:
 		rank.append(np.array(dataArr[country]))
-	##https://matplotlib.org/stable/gallery/statistics/histogram_multihist.html
+	#https://matplotlib.org/stable/gallery/statistics/histogram_multihist.html
+	#https://matplotlib.org/stable/gallery/color/named_colors.html
 	#color and label can have arrays passed into them
 	#label[0]=colors[0]
 	#rwidth is a multiplier to the bars so they fill out the xticks
@@ -108,10 +110,6 @@ def traitHist(countryHead, dataArr, title, colors=None):
 	#makes an array of arrays, which allows hist to generate side by side bars
 	for country in countryHead:
 		rank.append(np.array(dataArr[country]))
-	##https://matplotlib.org/stable/gallery/statistics/histogram_multihist.html
-	#color and label can have arrays passed into them
-	#label[0]=colors[0]
-	#rwidth is a multiplier to the bars so they fill out the xticks
 	plt.hist(rank, binEdge, color=colors, label=countryHead, rwidth=1, histtype='barstacked')
 	plt.xlim(1,26)
 	plt.xticks([1,5,10,15,20,26])
