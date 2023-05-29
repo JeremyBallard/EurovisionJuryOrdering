@@ -185,4 +185,5 @@ for row in pdJuryData.itertuples(name='Country'):
 #traitHist(['france', 'spain', 'switzerland'], dataArr, 'jury darlings but flops', ['midnightblue', 'goldenrod',  'red'])
 #traitHist(['croatia', 'serbia', 'finland', 'ukraine', 'germany'], dataArr, 'unique songs', 
 	#['blue', '#C7363D', '#32cd32', '#0057B7', 'firebrick'])
-#traitHist(['croatia', 'slovenia', 'germany', 'australia'], dataArr, 'rockMetalBands', ['blue', '#fc8eac','maroon', '#E4002B'])
+traitHist(['croatia', 'slovenia', 'germany', 'australia'], dataArr, 'rock metal bands', ['blue', '#fc8eac','maroon', '#E4002B'])
+traitHist(['albania', 'moldova', 'portugal', 'czechia'], dataArr, 'ethnic songs', ['maroon', '#ffd100', '#e42518', '#11457E'])
