@@ -1,7 +1,7 @@
 # Crediting
 If you use this repository in one of your other projects, please link back to this repository and give credit with my username.
 
-If you use this code to help create graphics for a social media post, a link in the comments of the post to this github repo would be much appreciated. No need to @ as my social media presence is barren.
+If you use this code to help create graphics for a social media post, a link in the comments of the post to this github repo would be much appreciated. Reddit username shoutout would also be appreciated at "u/WhenAmINotStruggling"
 
 I don't ask for much more than that.
 
