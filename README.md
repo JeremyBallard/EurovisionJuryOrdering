@@ -36,9 +36,10 @@ There is no x axis label for these histograms as each bar is labelled with text 
 These figures get saved in "HistogramTop3".
 - [x] Head to Head Histogram "matchups": Ability to compare two countries and stack the bars beside each other so you can see which one got more of which bucket.  
 The function "matchupHist" takes two countries, the colors for each country respectively, and merges their rank data into a single histogram. This way, you can directly compare the counts between each country in each bucket.
-There is a legend in the top that shows which country is which color on the map. You do not have to define colors and colors will be automatically used from matplotlib. Only takes in 2 countries currently.
-- [ ] Grouping many countries by common category and showing total count of each bucket, with bars distinctly stacked on top of each other.
-
+There is a legend in the top that shows which country is which color on the map. You do not have to define colors and colors will be automatically used from matplotlib. Only takes in 2 countries in a list.
+- [x] Grouping many countries by common category and showing total count of each bucket, with bars distinctly stacked on top of each other.
+The function "traitHist" works the same as matchupHist for input. However, instead of having bars side by side, traitHist stacks the bars on top of each other. This shows how generally songs of similar genre/style/expectation actually fared. 
+The legend works the same as in matchupHist. I do not recommend going past 6 countries as the colors and histogram look very messy and unwieldy. 
 
 
 
