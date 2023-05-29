@@ -28,6 +28,8 @@ def indivHist(qualCountryList, dataArr):
 	for country in qualCountryList:
 		#access array from dataArr['country']
 		rank = np.array(dataArr[country])
+		#https://stackoverflow.com/questions/13714454/specifying-and-saving-a-figure-with-exact-size-in-pixels
+		plt.figure(figsize=(2560/300, 1440/300), dpi=300)
 		#https://medium.com/@arseniytyurin/how-to-make-your-histogram-shine-69e432be39ca
 		#we add patches for custom colors on each bin
 		rank, bins, patches = plt.hist(rank, binEdge, edgecolor='#101010',linewidth=.5)
@@ -47,7 +49,8 @@ def indivHist(qualCountryList, dataArr):
 		plt.ylabel('Count')
 		plt.title(country + ' jury rank')
 		plt.savefig('Individual_Histograms/' + country + 'JuryRanksGiven.png')
-		plt.clf()
+		#defining custom figure resolution means using this not plt.clf()
+		plt.close()
 
 #country is a string of the country you want
 #generates top 3 of any country passed in
@@ -56,6 +59,7 @@ def top3Hist(country, dataArr):
 	dirExist('HistogramTop3')
 	binEdge = [0.5, 1.5, 2.5, 3.5]
 	rank = np.array(dataArr[country])
+	plt.figure(figsize=(2560/300, 1440/300), dpi=300)
 	rank, bins, patches = plt.hist(rank, binEdge, edgecolor='#101010',linewidth=.5)
 	plt.xlim(0.5,3.5)
 	#https://stackoverflow.com/questions/12998430/how-to-remove-xticks-from-a-plot
@@ -72,7 +76,7 @@ def top3Hist(country, dataArr):
 	plt.text(patches[0].get_width() + patches[1].get_width(), patches[1].get_height()+1, '2nd')
 	plt.text(patches[0].get_width() + patches[1].get_width() + patches[2].get_width(), patches[2].get_height()+1, '3rd')
 	plt.savefig('HistogramTop3/' + country +'Top3.png')
-	plt.clf()
+	plt.close()
 
 def matchupHist(countryHead, dataArr, colors=None):
 	if len(countryHead) != 2 and type(countryHead) is not list:
@@ -87,6 +91,7 @@ def matchupHist(countryHead, dataArr, colors=None):
 	#makes an array of arrays, which allows hist to generate side by side bars
 	for country in countryHead:
 		rank.append(np.array(dataArr[country]))
+	plt.figure(figsize=(2560/300, 1440/300), dpi=300)
 	#https://matplotlib.org/stable/gallery/statistics/histogram_multihist.html
 	#https://matplotlib.org/stable/gallery/color/named_colors.html
 	#color and label can have arrays passed into them
@@ -100,7 +105,7 @@ def matchupHist(countryHead, dataArr, colors=None):
 	plt.title(countryHead[0] + ' vs. ' + countryHead[1] + ": Ranks by Jury")
 	plt.legend(prop={'size': '14'})
 	plt.savefig('1v1Histogram/' + countryHead[0]+countryHead[1]+'Matchup.png')
-	plt.clf()
+	plt.close()
 
 def traitHist(countryHead, dataArr, title, colors=None):
 	dirExist('TraitHistogram')
@@ -110,6 +115,7 @@ def traitHist(countryHead, dataArr, title, colors=None):
 	#makes an array of arrays, which allows hist to generate side by side bars
 	for country in countryHead:
 		rank.append(np.array(dataArr[country]))
+	plt.figure(figsize=(2560/300, 1440/300), dpi=300)
 	plt.hist(rank, binEdge, color=colors, label=countryHead, rwidth=1, histtype='barstacked')
 	plt.xlim(1,26)
 	plt.xticks([1,5,10,15,20,26])
@@ -118,7 +124,7 @@ def traitHist(countryHead, dataArr, title, colors=None):
 	plt.title(title)
 	plt.legend()
 	plt.savefig('TraitHistogram/' + title + '.png')
-	plt.clf()
+	plt.close()
 
 qualCountryList = ['albania', 'armenia', 'australia', 'austria', 'belgium', 'croatia',
 'cyprus','czechia','estonia','finland','france','germany','israel','italy','lithuania',
@@ -179,4 +185,4 @@ for row in pdJuryData.itertuples(name='Country'):
 #traitHist(['france', 'spain', 'switzerland'], dataArr, 'jury darlings but flops', ['midnightblue', 'goldenrod',  'red'])
 #traitHist(['croatia', 'serbia', 'finland', 'ukraine', 'germany'], dataArr, 'unique songs', 
 	#['blue', '#C7363D', '#32cd32', '#0057B7', 'firebrick'])
-traitHist(['croatia', 'slovenia', 'germany', 'australia'], dataArr, 'rockMetalBands', ['blue', '#fc8eac','maroon', '#E4002B'])
+#traitHist(['croatia', 'slovenia', 'germany', 'australia'], dataArr, 'rockMetalBands', ['blue', '#fc8eac','maroon', '#E4002B'])
